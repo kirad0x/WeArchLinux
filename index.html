@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeArch Linux - The Most Optimized Arch Linux Distro</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -13,78 +13,77 @@
 
     <iframe id="bg-music" width="1" height="1" src="https://www.youtube.com/embed/21Zsm0zkAXw?autoplay=1&loop=1&playlist=21Zsm0zkAXw&mute=1" frameborder="0" allow="autoplay; encrypted-media; loop" allowfullscreen style="display: none;"></iframe>
 
-    <div id="taskbar">
-        <div class="taskbar-left">
+    <header id="taskbar-dashboard">
+        <div class="dash-item left-title">
             <span class="prompt">$ WeArch ~</span>
             <span class="language-switch" onclick="toggleLanguage()">[ TR / EN ]</span>
         </div>
-        
-        <div class="taskbar-center">
-            <svg id="arch-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20">
-                <path fill="white" d="M10 50 L50 90 L90 50 L50 10 Z M50 50 L75 75 L75 50 L50 25 Z"/>
-            </svg>
-            <span class="info-text" data-tr="Optimum Stabilite" data-en="Optimum Stability">Optimum Stabilite</span>
-            <a href="https://discord.gg/5RgM9hDkpb" target="_blank" class="taskbar-item discord-link">
-                <svg viewBox="0 0 71 55" width="18" height="18" fill="white" style="vertical-align: middle;">
-                    <path d="M60.317 7.749a21.734 21.734 0 0 0-1.859-.444 20.25 20.25 0 0 0-2.341-.122c-5.758.261-11.41 1.76-16.486 4.31a.138.138 0 0 1-.131-.035 34.004 34.004 0 0 1-5.118-4.322.128.128 0 0 1-.161-.03c-5.163-2.618-11.026-4.195-16.991-4.373a21.492 21.492 0 0 0-4.38.384c-.58.118-1.162.247-1.745.39a.14.14 0 0 0-.083.076 29.58 29.58 0 0 0-4.17 12.083.123.123 0 0 0 .041.111 25.352 25.352 0 0 0 5.483 8.356c.046.048.113.065.176.049a23.953 23.953 0 0 1-2.903-1.603.14.14 0 0 0-.166.027 27.288 27.288 0 0 0-3.376 3.447.135.135 0 0 0 .043.208 41.59 41.59 0 0 0 7.726 5.86.136.136 0 0 0 .142.007 38.625 38.625 0 0 0 11.233-2.909c.075-.022.15-.022.224 0a38.65 38.65 0 0 0 11.235 2.91.137.137 0 0 0 .143-.008 41.59 41.59 0 0 0 7.728-5.86.135.135 0 0 0 .041-.208 27.288 27.288 0 0 0-3.377-3.447.14.14 0 0 0-.167-.027 23.953 23.953 0 0 1-2.903 1.603.123.123 0 0 0 .176-.049 25.352 25.352 0 0 0 5.483-8.356.123.123 0 0 0 .041-.111 29.58 29.58 0 0 0-4.17-12.083.14.14 0 0 0-.083-.076 21.492 21.492 0 0 0-4.38-.384 20.25 20.25 0 0 0-1.745.39zM22.08 30.686c-2.33 0-4.215-2.049-4.215-4.576 0-2.527 1.885-4.576 4.215-4.576 2.33 0 4.214 2.049 4.214 4.576 0 2.527-1.884 4.576-4.214 4.576zm27.182 0c-2.33 0-4.215-2.049-4.215-4.576 0-2.527 1.885-4.576 4.215-4.576 2.33 0 4.214 2.049 4.214 4.576 0 2.527-1.884 4.576-4.214 4.576z"/>
-                </svg>
-            </a>
-        </div>
 
-        <div class="taskbar-right">
+        <div class="dash-item center-stats">
+            <span class="stat-label">CPU:</span>
+            <span id="cpu-load" class="stat-value">5%</span>
+            
+            <span class="stat-label">MEM:</span>
+            <span id="mem-usage" class="stat-value">1.2G/16G</span>
+            
+            <span class="stat-label">VOL:</span>
             <div id="volume-indicator" class="terminal-vol" onclick="toggleAudio()">
-                <span id="vol-text">VOL</span>
                 <div class="vol-bar-container">
                     <div class="vol-bar-segment active"></div>
                     <div class="vol-bar-segment active"></div>
                     <div class="vol-bar-segment active"></div>
-                    <div class="vol-bar-segment active"></div>
-                    <div class="vol-bar-segment"></div>
-                    <div class="vol-bar-segment"></div>
-                    <div class="vol-bar-segment"></div>
                     <div class="vol-bar-segment"></div>
                 </div>
             </div>
-            <span class="info-text" id="current-time">00:00:00</span>
         </div>
-    </div>
 
-    <main>
-        <div class="hero-section">
-            <img src="https://i.ibb.co/R4DM0Cj2/Gemini-Generated-mage-in4buzin4buzin4b-removebg-preview-1.png" alt="WeArch Linux Logo" class="main-logo">
+        <div class="dash-item right-info">
+            <span id="current-time">00:00:00</span>
+            <a href="https://discord.gg/5RgM9hDkpb" target="_blank" class="discord-link">Discord</a>
+        </div>
+    </header>
+    
+    <main id="main-window">
+        <div class="window-header">
+            <span class="window-title">WeArch Linux - The Optimized Arch Distro</span>
+            <div class="window-controls">
+                <span class="control-btn minimize">-</span>
+                <span class="control-btn maximize">□</span>
+                <span class="control-btn close">x</span>
+            </div>
+        </div>
+        
+        <div class="window-content">
             
-            <h1 class="light-up-animation">
-                <span data-tr="En stabil çalışan, en optimize olan Arch tabanlı linux distrosu " data-en="The most stable, most optimized Arch-based Linux distribution "></span>
-                <span class="we-arch-text">WeArch Linux</span>
-            </h1>
+            <div class="content-header">
+                <img src="https://i.ibb.co/R4DM0Cj2/Gemini-Generated-mage-in4buzin4buzin4b-removebg-preview-1.png" alt="WeArch Logo" class="main-logo-small">
+                <h1 class="light-up-animation">
+                    <span class="we-arch-text">WeArch Linux</span>
+                </h1>
+                <p data-tr="- En Optimize Arch Linux Distrosu -" data-en="- The Most Optimized Arch Linux Distro -">- En Optimize Arch Linux Distrosu -</p>
+            </div>
+            
+            <hr class="neon-divider">
 
-            <button id="download-button" class="neon-button" data-tr="WeArch Linux'u İndir" data-en="Download WeArch Linux">WeArch Linux'u İndir</button>
-        </div>
+            <section class="text-section">
+                <h2 data-tr="NEDEN WEARCH LINUX?" data-en="WHY WEARCH LINUX?">NEDEN WEARCH LINUX?</h2>
+                <p data-tr="WeArch Linux - Bu işletim sistemi, halihazırda stabil ve güçlü olan Arch Linux'un en uç optimizasyonlarla yeniden derlenmiş halidir. Gereksiz hiçbir şey içermez, sadece saf hız ve performans sağlar. Linux deneyiminizi yormayan ve yormayacak bir şekilde en üst seviyeye taşır." data-en="WeArch Linux - This OS is a re-compiled version of the already stable and powerful Arch Linux, brought to the extreme limits of optimization. It contains nothing unnecessary, providing only pure speed and performance. It takes your Linux experience to the highest level without causing any strain.">WeArch Linux - Bu işletim sistemi, halihazırda stabil ve güçlü olan Arch Linux'un en uç optimizasyonlarla yeniden derlenmiş halidir. Gereksiz hiçbir şey içermez, sadece saf hız ve performans sağlar. Linux deneyiminizi yormayan ve yormayacak bir şekilde en üst seviyeye taşır.</p>
+                <p data-tr="Bu felsefe sadece donanım değil, kullanıcı arayüzü ve deneyim açısından da geçerlidir. Hyprland ile optimize edilmiş bir masaüstü yöneticisi sunarak size hem modern hem de hafif bir çalışma ortamı sağlar." data-en="This philosophy applies not only to hardware but also to the user interface and experience. By offering a desktop manager optimized with Hyprland, it provides you with a working environment that is both modern and lightweight.">Bu felsefe sadece donanım değil, kullanıcı arayüzü ve deneyim açısından da geçerlidir. Hyprland ile optimize edilmiş bir masaüstü yöneticisi sunarak size hem modern hem de hafif bir çalışma ortamı sağlar.</p>
+            </section>
 
-        <div class="tiling-windows-container">
-            <div class="tiling-window" style="top: 10%; left: 5%;"></div>
-            <div class="tiling-window" style="top: 20%; right: 10%;"></div>
-            <div class="tiling-window" style="bottom: 15%; left: 15%;"></div>
-            <div class="tiling-window" style="bottom: 5%; right: 5%;"></div>
-            <div class="tiling-window" style="top: 50%; left: 40%;"></div>
-        </div>
-
-        <div class="neofetch-section">
-            <div class="ascii-container">
-                <h2>$ neofetch --we-arch</h2>
-                <pre id="ascii-output">
-</pre>
+            <div class="cta-section">
+                <button id="download-button" class="neon-button" data-tr="WeArch Linux'u İndir" data-en="Download WeArch Linux">WeArch Linux'u İndir</button>
+            
+                <div class="features-list">
+                    <h3 data-tr="Sistem Özellikleri" data-en="System Features">Sistem Özellikleri</h3>
+                    <ul>
+                        <li><span class="feature-icon">⚡</span> <span data-tr="Uç Nokta Optimizasyon" data-en="Extreme Optimization">Uç Nokta Optimizasyon</span></li>
+                        <li><span class="feature-icon">🛡️</span> <span data-tr="Kaya Gibi Stabil Kernel" data-en="Rock-Solid Stable Kernel">Kaya Gibi Stabil Kernel</span></li>
+                        <li><span class="feature-icon">🟣</span> <span data-tr="Hyprland/Mor Tema" data-en="Hyprland/Purple Theme">Hyprland/Mor Tema</span></li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="features-list">
-                <h3 data-tr="Temel Özellikler" data-en="Key Features">Temel Özellikler</h3>
-                <ul>
-                    <li data-tr="En Yüksek Optimizasyon (Optimize)" data-en="Highest Optimization (Optimized)">En Yüksek Optimizasyon (Optimize)</li>
-                    <li data-tr="Kaya Gibi Stabil Çalışma (Stable)" data-en="Rock-Solid Stability (Stable)">Kaya Gibi Stabil Çalışma (Stable)</li>
-                    <li data-tr="Arch Temelli Sade Güç (Arch Based)" data-en="Arch-Based Pure Power (Arch Based)">Arch Temelli Sade Güç (Arch Based)</li>
-                    <li data-tr="Mor Neon Tema (Purple Neon Theme)" data-en="Purple Neon Theme (Purple Neon Theme)">Mor Neon Tema (Purple Neon Theme)</li>
-                </ul>
-            </div>
         </div>
     </main>
 
