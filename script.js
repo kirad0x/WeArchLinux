@@ -5,31 +5,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLang = 'tr';
     const texts = document.querySelectorAll('[data-tr]');
     const downloadButton = document.getElementById('download-button');
-    const titleP = document.querySelector('.content-header p');
-    const h2Title = document.querySelector('.text-section h2');
-    const h3Title = document.querySelector('.features-list h3');
 
     window.toggleLanguage = () => {
         currentLang = currentLang === 'tr' ? 'en' : 'tr';
         
-        document.querySelector('.language-switch').textContent = currentLang === 'tr' ? '[ TR / EN ]' : '[ EN / TR ]';
-
         texts.forEach(element => {
-            if (element === titleP || element === h2Title || element === h3Title) {
-                element.textContent = element.getAttribute(`data-${currentLang}`);
-            } else {
-                element.innerHTML = element.getAttribute(`data-${currentLang}`);
-            }
+            element.textContent = element.getAttribute(`data-${currentLang}`);
         });
 
         downloadButton.textContent = downloadButton.getAttribute(`data-${currentLang}`);
-        document.getElementById('snake-title').textContent = document.getElementById('snake-title').getAttribute(`data-${currentLang}`);
+        
+        document.querySelector('.subtitle').textContent = currentLang === 'tr' 
+            ? "- En Optimize Arch Linux Distrosu -" 
+            : "- The Most Optimized Arch Linux Distro -";
     };
 
     // İlk yüklemede başlıkları doğru dilde ayarla
-    titleP.textContent = titleP.getAttribute('data-tr');
-    h2Title.textContent = h2Title.getAttribute('data-tr');
-    h3Title.textContent = h3Title.getAttribute('data-tr');
+    document.querySelector('.subtitle').textContent = "- En Optimize Arch Linux Distrosu -";
 
 
     // ---------------------------------------------
@@ -52,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isMuted) {
                 seg.classList.remove('active');
             } else {
-                if (index < 4) { // Dört çubuk aktif
+                if (index < 4) { 
                     seg.classList.add('active');
                 } else {
                     seg.classList.remove('active');
@@ -62,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ---------------------------------------------
-    // 3. Matrix Efekti (Mor renkli Matrix)
+    // 3. Matrix Efekti (Neon Yeşil)
     // ---------------------------------------------
     const canvas = document.getElementById('matrix-canvas');
     const ctx = canvas.getContext('2d');
@@ -77,17 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const drops = [];
 
     for (let i = 0; i < columns; i++) {
-        drops[i] = 0; // Başlangıçta hepsi en üstten başlasın
+        drops[i] = 0;
     }
 
-    const characters = 'WeArch01!@#$%^&*()_+-=[]{};:.,<>/?|\\~`asdfghjklzxcvbnm';
+    const characters = '01!@#$%^&*()_+-=[]{};:.,<>/?|\\~`WeArchLinuxWearchlinux';
 
     function drawMatrix() {
-        ctx.fillStyle = 'rgba(10, 10, 26, 0.1)'; // Koyu mor arkaplan ve iz
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; // Siyah arkaplan ve iz
         ctx.fillRect(0, 0, W, H);
 
-        ctx.fillStyle = '#BB86FC'; // Neon Mor rengi
-        ctx.font = font_size + 'px VT323'; // Terminal fontunu kullan
+        ctx.fillStyle = '#00FF41'; // Neon Yeşil rengi
+        ctx.font = font_size + 'px VT323'; 
 
         for (let i = 0; i < drops.length; i++) {
             const text = characters[Math.floor(Math.random() * characters.length)];
@@ -134,8 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
 
         // CPU ve RAM simülasyonu
-        const cpu = Math.floor(Math.random() * 5) + 3; // %3-7 arası
-        const memUsed = (1.2 + Math.random() * 0.3).toFixed(1); // 1.2G-1.5G arası
+        const cpu = Math.floor(Math.random() * 5) + 3; 
+        const memUsed = (1.2 + Math.random() * 0.3).toFixed(1); 
         document.getElementById('cpu-load').textContent = `${cpu}%`;
         document.getElementById('mem-usage').textContent = `${memUsed}G/16G`;
     };
@@ -144,15 +136,20 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateStats, 1000);
 
     // ---------------------------------------------
-    // 5. Yılan Oyunu (Snake Game) - Önceki koddan aynı şekilde eklenebilir.
+    // 5. Yılan Oyunu (Snake Game)
     // ---------------------------------------------
-    // (Kod uzun olmaması için bu kısım yukarıdaki 3. maddedeki script.js'ten buraya kopyalanmalıdır.)
+    // İndirme Butonu Olayı (Simülasyon)
+    document.getElementById('download-button').addEventListener('click', () => {
+        alert("WeArch Linux indirme işlemi başlatıldı. (Simülasyon)");
+    });
 
-    // Örnek: İndirme Butonu Olayı (Yılan oyununu başlatır)
-    // document.getElementById('download-button').addEventListener('click', startGame);
-
-    // Örnek: ESC Tuşu ile Oyunu Kapatma
-    // document.addEventListener('keydown', (event) => {
-    //     if (event.key === 'Escape' && !gameContainer.classList.contains('hidden')) { ... }
-    // });
+    // ESC Tuşu ile Oyunu Kapatma
+    const gameContainer = document.getElementById('snake-game-container');
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !gameContainer.classList.contains('hidden')) {
+            // clearInterval(gameLoop); // Eğer oyun döngüsü varsa
+            gameContainer.classList.add('hidden');
+            document.body.classList.remove('hidden-overflow');
+        }
+    });
 });
