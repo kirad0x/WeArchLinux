@@ -11,26 +11,30 @@
 
     <canvas id="matrix-canvas"></canvas>
 
-    <iframe width="1" height="1" src="https://www.youtube.com/embed/21Zsm0zkAXw?autoplay=1&loop=1&playlist=21Zsm0zkAXw&mute=1" frameborder="0" allow="autoplay; encrypted-media; loop" allowfullscreen style="display: none;"></iframe>
+    <iframe id="bg-music" width="1" height="1" src="https://www.youtube.com/embed/21Zsm0zkAXw?autoplay=1&loop=1&playlist=21Zsm0zkAXw&mute=1" frameborder="0" allow="autoplay; encrypted-media; loop" allowfullscreen style="display: none;"></iframe>
 
     <div id="taskbar">
         <div class="taskbar-left">
+            <span class="prompt">$ WeArch ~</span>
             <span class="language-switch" onclick="toggleLanguage()">[ TR / EN ]</span>
+        </div>
+        
+        <div class="taskbar-center">
+            <svg id="arch-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20">
+                <path fill="white" d="M10 50 L50 90 L90 50 L50 10 Z M50 50 L75 75 L75 50 L50 25 Z"/>
+            </svg>
+            <span class="info-text" data-tr="Optimum Stabilite" data-en="Optimum Stability">Optimum Stabilite</span>
             <a href="https://discord.gg/5RgM9hDkpb" target="_blank" class="taskbar-item discord-link">
-                <svg viewBox="0 0 71 55" width="20" height="20" fill="white" style="vertical-align: middle;">
+                <svg viewBox="0 0 71 55" width="18" height="18" fill="white" style="vertical-align: middle;">
                     <path d="M60.317 7.749a21.734 21.734 0 0 0-1.859-.444 20.25 20.25 0 0 0-2.341-.122c-5.758.261-11.41 1.76-16.486 4.31a.138.138 0 0 1-.131-.035 34.004 34.004 0 0 1-5.118-4.322.128.128 0 0 1-.161-.03c-5.163-2.618-11.026-4.195-16.991-4.373a21.492 21.492 0 0 0-4.38.384c-.58.118-1.162.247-1.745.39a.14.14 0 0 0-.083.076 29.58 29.58 0 0 0-4.17 12.083.123.123 0 0 0 .041.111 25.352 25.352 0 0 0 5.483 8.356c.046.048.113.065.176.049a23.953 23.953 0 0 1-2.903-1.603.14.14 0 0 0-.166.027 27.288 27.288 0 0 0-3.376 3.447.135.135 0 0 0 .043.208 41.59 41.59 0 0 0 7.726 5.86.136.136 0 0 0 .142.007 38.625 38.625 0 0 0 11.233-2.909c.075-.022.15-.022.224 0a38.65 38.65 0 0 0 11.235 2.91.137.137 0 0 0 .143-.008 41.59 41.59 0 0 0 7.728-5.86.135.135 0 0 0 .041-.208 27.288 27.288 0 0 0-3.377-3.447.14.14 0 0 0-.167-.027 23.953 23.953 0 0 1-2.903 1.603.123.123 0 0 0 .176-.049 25.352 25.352 0 0 0 5.483-8.356.123.123 0 0 0 .041-.111 29.58 29.58 0 0 0-4.17-12.083.14.14 0 0 0-.083-.076 21.492 21.492 0 0 0-4.38-.384 20.25 20.25 0 0 0-1.745.39zM22.08 30.686c-2.33 0-4.215-2.049-4.215-4.576 0-2.527 1.885-4.576 4.215-4.576 2.33 0 4.214 2.049 4.214 4.576 0 2.527-1.884 4.576-4.214 4.576zm27.182 0c-2.33 0-4.215-2.049-4.215-4.576 0-2.527 1.885-4.576 4.215-4.576 2.33 0 4.214 2.049 4.214 4.576 0 2.527-1.884 4.576-4.214 4.576z"/>
                 </svg>
             </a>
         </div>
-        <div class="taskbar-center">
-            <svg id="arch-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="24" height="24">
-                <path fill="white" d="M10 50 L50 90 L90 50 L50 10 Z M50 50 L75 75 L75 50 L50 25 Z"/>
-            </svg>
-        </div>
+
         <div class="taskbar-right">
-            <div id="volume-indicator" class="terminal-vol">
+            <div id="volume-indicator" class="terminal-vol" onclick="toggleAudio()">
                 <span id="vol-text">VOL</span>
-                <div class="vol-bar-container" onclick="toggleAudio()">
+                <div class="vol-bar-container">
                     <div class="vol-bar-segment active"></div>
                     <div class="vol-bar-segment active"></div>
                     <div class="vol-bar-segment active"></div>
@@ -41,6 +45,7 @@
                     <div class="vol-bar-segment"></div>
                 </div>
             </div>
+            <span class="info-text" id="current-time">00:00:00</span>
         </div>
     </div>
 
@@ -66,7 +71,7 @@
 
         <div class="neofetch-section">
             <div class="ascii-container">
-                <h2>Neofetch</h2>
+                <h2>$ neofetch --we-arch</h2>
                 <pre id="ascii-output">
 </pre>
             </div>
