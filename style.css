@@ -1,0 +1,317 @@
+:root {
+    --color-primary-dark: #0A0A1A;
+    --color-neon-purple: #BB86FC; /* Ana Mor Renk */
+    --color-neon-green: #00FF41; /* Matrix Yeşili */
+    --color-text-light: #E0E0E0;
+    --taskbar-height: 40px;
+}
+
+/* Genel Stil ve Matrix Canvas */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Mono', monospace;
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-light);
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+#matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; /* Arkaplanda kalsın */
+    opacity: 0.3;
+}
+
+main {
+    padding-top: var(--taskbar-height);
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - var(--taskbar-height));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Üst Panel (Taskbar) */
+#taskbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--taskbar-height);
+    background-color: rgba(0, 0, 0, 0.7);
+    border-bottom: 2px solid var(--color-neon-purple);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+.taskbar-left, .taskbar-right, .taskbar-center {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.language-switch {
+    cursor: pointer;
+    color: var(--color-neon-purple);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.language-switch:hover {
+    color: white;
+}
+
+.discord-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+#arch-logo {
+    opacity: 0.8;
+}
+
+/* Terminal Tarzı Ses Göstergesi */
+.terminal-vol {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-neon-purple);
+    padding: 2px 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+#vol-text {
+    color: var(--color-neon-purple);
+    margin-right: 5px;
+}
+
+.vol-bar-container {
+    display: flex;
+    gap: 2px;
+}
+
+.vol-bar-segment {
+    width: 4px;
+    height: 10px;
+    background-color: #333;
+    transition: background-color 0.3s;
+}
+
+.vol-bar-segment.active {
+    background-color: var(--color-neon-purple);
+    box-shadow: 0 0 5px var(--color-neon-purple);
+}
+
+/* Ana Bölüm ve Başlık */
+.hero-section {
+    padding: 60px 20px;
+    max-width: 900px;
+}
+
+.main-logo {
+    width: 250px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 3em;
+    color: var(--color-text-light);
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.we-arch-text {
+    color: var(--color-neon-purple);
+}
+
+/* Aydınlanma Animasyonu */
+.light-up-animation {
+    background-color: transparent;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 5px;
+}
+
+.light-up-animation::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, var(--color-neon-purple), transparent);
+    transform: translateX(-100%);
+    animation: light-up 3s ease-in-out infinite;
+}
+
+@keyframes light-up {
+    0% {
+        transform: translateX(-100%);
+    }
+    50% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Neon İndirme Tuşu */
+.neon-button {
+    background-color: var(--color-neon-purple);
+    color: var(--color-primary-dark);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--color-neon-purple), 0 0 20px var(--color-neon-purple) inset;
+    text-transform: uppercase;
+}
+
+.neon-button:hover {
+    background-color: #fff;
+    color: var(--color-primary-dark);
+    box-shadow: 0 0 20px var(--color-neon-purple), 0 0 40px var(--color-neon-purple) inset;
+    transform: translateY(-2px);
+}
+
+/* Hyprland Benzeri Pencereler */
+.tiling-windows-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.tiling-window {
+    position: absolute;
+    width: 150px;
+    height: 100px;
+    background-color: rgba(187, 134, 252, 0.1); /* Yarı şeffaf mor */
+    border: 1px solid var(--color-neon-purple);
+    border-radius: 5px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    backdrop-filter: blur(2px);
+}
+
+.tiling-window:hover {
+    transform: scale(1.1); /* Fare üstüne gelince büyüt */
+    box-shadow: 0 0 20px rgba(187, 134, 252, 0.5);
+    background-color: rgba(187, 134, 252, 0.2);
+}
+
+/* Neofetch ve Özellikler */
+.neofetch-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 80%;
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--color-neon-purple);
+    border-radius: 10px;
+}
+
+.ascii-container {
+    text-align: left;
+}
+
+.ascii-container h2 {
+    color: var(--color-neon-purple);
+    border-bottom: 1px dashed var(--color-neon-purple);
+    padding-bottom: 5px;
+}
+
+#ascii-output {
+    color: var(--color-neon-green);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 5px;
+    white-space: pre;
+    font-size: 0.9em;
+    line-height: 1.1;
+    overflow: hidden;
+    text-shadow: 0 0 5px var(--color-neon-green);
+}
+
+.features-list {
+    text-align: left;
+    padding-left: 40px;
+    border-left: 1px dashed #333;
+}
+
+.features-list h3 {
+    color: var(--color-neon-purple);
+    margin-top: 0;
+}
+
+.features-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.features-list li {
+    margin-bottom: 10px;
+    color: var(--color-text-light);
+    position: relative;
+    padding-left: 20px;
+}
+
+.features-list li::before {
+    content: "$ "; /* Terminal prompt */
+    color: var(--color-neon-purple);
+    position: absolute;
+    left: 0;
+}
+
+/* Yılan Oyunu Stili */
+.hidden {
+    display: none !important;
+}
+
+#snake-game-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-neon-purple);
+}
+
+#snake-title {
+    text-shadow: 0 0 5px var(--color-neon-purple);
+}
+
+#snake-canvas {
+    border: 5px solid var(--color-neon-purple);
+    box-shadow: 0 0 20px var(--color-neon-purple);
+    background-color: #000;
+}
