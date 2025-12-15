@@ -1,23 +1,23 @@
 :root {
-    --color-primary-dark: #0A0A1A;
-    --color-neon-purple: #BB86FC; /* Ana Mor Renk */
-    --color-neon-green: #00FF41; /* Matrix Yeşili */
-    --color-text-light: #E0E0E0;
-    --taskbar-height: 40px; /* Panel yüksekliği biraz küçültüldü */
-    --window-bg: #1e1e3f; /* Pencere arkaplanı koyu mor/mavi ton */
+    --color-bg-dark: #000000;
+    --color-matrix-green: #00FF41; /* Matrix Yeşili - Mor Matris İsteği Dışında Kalındı */
+    --color-neon-purple: #BB86FC; /* WeArch Vurgu Moru */
+    --color-window-bg: #FFFFFF; /* Pencere arkaplanı BEYAZ (Görselle Uyumlu) */
+    --color-window-text: #000000; /* Pencere yazısı SİYAH */
+    --taskbar-height: 40px; 
 }
 
 /* Genel Stil ve Matrix Canvas */
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto Mono', monospace;
-    background-color: var(--color-primary-dark);
-    color: var(--color-text-light);
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--color-bg-dark);
+    color: var(--color-window-text);
     overflow-x: hidden;
     min-height: 100vh;
     position: relative;
-    font-size: 16px;
+    padding-top: var(--taskbar-height); 
 }
 
 #matrix-canvas {
@@ -27,224 +27,198 @@ body {
     width: 100%;
     height: 100%;
     z-index: -2;
-    opacity: 0.5; /* Opaklık artırıldı */
+    opacity: 0.2; 
 }
 
-/* ÜST GÖSTERGE PANELİ (TASKBAR DASHBOARD) */
+/* ÜST GÖSTERGE PANELİ (TASKBAR DASHBOARD) - GÖRSELDEKİ GİBİ BÜYÜK VE KOYU */
 #taskbar-dashboard {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: var(--taskbar-height);
-    background-color: rgba(0, 0, 0, 0.95);
-    border-bottom: 3px solid var(--color-neon-purple);
+    background-color: #1A1A1A; /* Koyu siyah */
+    border-bottom: 2px solid var(--color-neon-purple);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 15px;
     box-sizing: border-box;
     z-index: 100;
-    font-size: 1.0em;
-    font-family: 'VT323', monospace; /* Daha belirgin terminal fontu */
-    box-shadow: 0 0 15px rgba(187, 134, 252, 0.5);
-    color: var(--color-neon-green); /* Tüm panel metni yeşil yapıldı */
+    font-family: 'VT323', monospace; 
+    font-size: 1.1em;
+    color: white; 
 }
 
 .dash-item {
     display: flex;
     align-items: center;
-    gap: 15px;
+    height: 100%;
 }
 
-.prompt {
+.left-title .prompt {
+    font-size: 1.5em;
     font-weight: bold;
-    color: var(--color-neon-purple); /* Prompt mor olsun */
+    color: var(--color-neon-purple); /* WeArch Marka rengi */
+}
+
+.center-stats {
+    gap: 20px;
+    flex-grow: 1;
+    justify-content: flex-end; 
+}
+
+.stat-group {
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
 
 .stat-label {
-    color: var(--color-text-light);
+    color: #CCCCCC;
 }
 
 .stat-value {
-    color: var(--color-neon-green);
-    font-weight: bold;
+    color: var(--color-matrix-green); /* Yeşil terminal rengi */
 }
 
-.language-switch {
-    cursor: pointer;
-    color: var(--color-text-light);
-    transition: color 0.3s;
-}
-
+/* Volume Bar */
 .terminal-vol {
     display: flex;
     align-items: center;
-    border: 1px solid var(--color-neon-purple);
-    padding: 2px 5px;
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.5);
 }
-
 .vol-bar-container {
     display: flex;
-    gap: 2px;
+    gap: 1px;
+    border: 1px solid white;
+    padding: 1px;
 }
-
 .vol-bar-segment {
-    width: 4px;
-    height: 10px;
+    width: 5px;
+    height: 12px;
     background-color: #333;
-    transition: background-color 0.3s;
 }
-
 .vol-bar-segment.active {
-    background-color: var(--color-neon-purple);
-    box-shadow: 0 0 4px var(--color-neon-purple);
+    background-color: white;
 }
 
-.discord-link {
-    color: var(--color-neon-purple);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* ANA İÇERİK PENCERESİ */
+/* ANA İÇERİK PENCERESİ - GÖRSELLE AYNI */
 #main-window {
-    width: 80%;
+    width: 90%;
     max-width: 900px;
-    min-height: 600px;
-    margin: 80px auto 30px auto; /* Üst panelin altına yerleştirildi */
-    background-color: var(--window-bg);
-    border: 2px solid var(--color-neon-purple);
-    box-shadow: 0 0 20px rgba(187, 134, 252, 0.6);
-    position: relative;
+    margin: 30px auto; 
+    background-color: var(--color-window-bg); /* BEYAZ */
+    border: 1px solid #AAAAAA; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); 
     z-index: 10;
-    font-family: 'Roboto Mono', monospace;
-    overflow: hidden;
+    min-height: 80vh;
 }
 
+/* Pencere Başlık Çubuğu - GÖRSELDEKİ SEKME YAPISI */
 .window-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: var(--color-neon-green);
-    padding: 8px 15px;
-    border-bottom: 2px solid var(--color-neon-purple);
-    font-family: 'VT323', monospace;
-}
-
-.window-title {
-    font-size: 1.1em;
-}
-
-.window-controls span {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    margin-left: 5px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 15px;
-    cursor: pointer;
-    font-size: 0.8em;
-    font-weight: bold;
-}
-
-.control-btn.minimize { background-color: #fdd835; color: #000; } /* Sarı */
-.control-btn.maximize { background-color: #43a047; color: #000; } /* Yeşil */
-.control-btn.close { background-color: #e53935; color: #fff; } /* Kırmızı */
-
-.window-content {
-    padding: 30px;
-    color: var(--color-text-light);
-}
-
-.content-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.main-logo-small {
-    width: 100px;
-    filter: drop-shadow(0 0 5px rgba(187, 134, 252, 0.7));
-}
-
-h1 {
-    font-size: 2.5em;
-    color: var(--color-text-light);
-    margin: 10px 0 5px 0;
-}
-
-.we-arch-text {
-    color: var(--color-neon-purple);
-    text-shadow: 0 0 5px var(--color-neon-purple);
-}
-
-.content-header p {
-    color: var(--color-neon-green);
-    font-size: 1.1em;
-}
-
-.neon-divider {
-    border: none;
-    border-top: 2px dashed var(--color-neon-purple);
-    margin: 30px 0;
-}
-
-.text-section h2 {
-    color: var(--color-neon-purple);
-    font-size: 1.5em;
-    border-bottom: 1px solid var(--color-neon-purple);
-    padding-bottom: 5px;
-}
-
-.cta-section {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 40px;
-    padding: 20px;
-    border: 1px dashed var(--color-neon-green);
-}
-
-.neon-button {
-    background-color: var(--color-neon-purple);
-    color: var(--color-primary-dark);
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--color-neon-purple), 0 0 20px var(--color-neon-purple) inset;
-    text-transform: uppercase;
-}
-
-.neon-button:hover {
-    background-color: #fff;
-    box-shadow: 0 0 20px var(--color-neon-purple), 0 0 40px var(--color-neon-purple) inset;
-    transform: translateY(-2px);
-}
-
-.features-list ul {
-    list-style: none;
+    align-items: stretch;
+    background-color: #1A1A1A; 
+    border-bottom: 1px solid #AAAAAA;
+    color: white;
     padding: 0;
+}
+
+.header-left {
+    display: flex;
+    gap: 1px;
+}
+
+.header-tab {
+    background-color: #333333;
+    padding: 5px 15px;
+    margin-right: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-right: 1px solid #000;
+}
+
+.header-tab.active-tab {
+    background-color: white; /* Aktif sekmeyi beyaz yap */
+    color: var(--color-window-text);
+    border-right: none;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    font-family: 'VT323', monospace;
+    font-weight: bold;
+}
+
+.control-btn {
+    padding: 0 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #CCCCCC;
+}
+
+/* Pencere İçeriği */
+.window-content {
+    padding: 30px 40px;
+    color: var(--color-window-text);
     text-align: left;
 }
 
-.features-list li {
-    margin: 8px 0;
-    color: var(--color-neon-green);
+.main-title {
+    font-size: 4em; 
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    color: #000;
 }
 
-.feature-icon {
-    margin-right: 10px;
-    color: var(--color-neon-purple);
+.subtitle {
+    font-size: 1.5em;
+    font-weight: 400;
+    margin: 0 0 30px 0;
+    color: #555;
+}
+
+/* Navigasyon Tuşları - Görseldeki gibi sade, terminal benzeri */
+.content-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.nav-button {
+    background: none;
+    border: 1px solid #999;
+    color: #555;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    font-family: 'Roboto Mono', monospace; 
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.content-divider {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.text-section p {
+    font-family: 'Roboto Mono', monospace; 
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.action-button {
+    background-color: var(--color-neon-purple); /* WeArch için mor aksiyon butonu */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
     font-weight: bold;
+    margin-top: 30px;
 }
-
-/* Yılan Oyunu (Gizli) */
-/* ... (önceki koddan yılan oyunu stilleri buraya gelecek) ... */
