@@ -1,234 +1,416 @@
-:root {
-    --color-primary-dark: #0A0A1A;
-    --color-neon-purple: #BB86FC; /* Ana Mor Renk */
-    --color-neon-green: #00FF41; /* Matrix Yeşili */
-    --color-text-light: #E0E0E0;
-    --taskbar-height: 50px; /* Panel yüksekliği artırıldı */
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // ---------------------------------------------
+    // 1. Dil Değiştirme (TR/EN)
+    // ---------------------------------------------
+    let currentLang = 'tr';
+    const texts = document.querySelectorAll('[data-tr]');
+    const downloadButton = document.getElementById('download-button');
+    const mainTitleSpan = document.querySelector('h1 span[data-tr]');
 
-/* Genel Stil ve Matrix Canvas */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto Mono', monospace;
-    background-color: var(--color-primary-dark);
-    color: var(--color-text-light);
-    overflow-x: hidden;
-    min-height: 100vh;
-    position: relative;
-    /* Yılan oyunu açılınca kaydırmayı engellemek için */
-    &.hidden-overflow {
-        overflow: hidden;
+    window.toggleLanguage = () => {
+        currentLang = currentLang === 'tr' ? 'en' : 'tr';
+        
+        document.querySelector('.language-switch').textContent = currentLang === 'tr' ? '[ TR / EN ]' : '[ EN / TR ]';
+
+        texts.forEach(element => {
+            if (element === mainTitleSpan) {
+                element.textContent = element.getAttribute(`data-${currentLang}`);
+            } else {
+                element.innerHTML = element.getAttribute(`data-${currentLang}`);
+            }
+        });
+
+        downloadButton.textContent = downloadButton.getAttribute(`data-${currentLang}`);
+        document.getElementById('snake-title').textContent = document.getElementById('snake-title').getAttribute(`data-${currentLang}`);
+
+        // Neofetch çıktısını yeniden yükle
+        loadNeofetch();
+    };
+
+    mainTitleSpan.textContent = mainTitleSpan.getAttribute('data-tr');
+
+
+    // ---------------------------------------------
+    // 2. Neofetch ASCII ve Random Değişim (ASCII metinleri öncekiyle aynı tutuldu)
+    // ---------------------------------------------
+    const asciiArts = [
+        // ... (HTML kodunda verilen 5 ASCII kodunu buraya kopyalayın)
+        `
+        .,ad88888ba,.
+      .,ad8888888888888a,
+    d8P"""98888P"""98888b,
+    9b    d8888,    '9888B
+  ,d88aaa8888888b,,,d888P'
+  d8888888888888888888888b
+  d888888P""98888888888888P
+  88888P'    9888888888888
+  '98P'      9888888888P'
+               '"9888P"'
+                  "'"
+
+OS: WeArch Linux
+Host: WeArch-VM
+Kernel: 6.9.1-arch-we (optimized)
+Uptime: 1h 23m
+Packages: 1560 (pacman)
+Shell: zsh 5.9
+WM: Hyprland (Optimized)
+Theme: MorNeon
+CPU: WeCore i9 (16)
+GPU: AMD/Intel/NVIDIA
+Memory: 32G / 64G
+        `,
+        // ... diğer 4 ASCII metni ...
+        `
+            *** ***
+          ***....** **...***
+          **........** **.......**
+  *** **..........*.........** ***
+**.....** **..................** **.....**
+**.........** **..............** **.........**
+*..............* *..........* *..............*
+ **..............* *......* *..............**
+   **..............** *....* **..............**
+     *......................................*
+   **..............**........**..............**
+**..............* *....* *..............**
+*..............* *....* *..............*
+ **.........** *....* **.........**
+   **.....** *....* **.....**
+     *** **....* ***
+                   ** * * *
+
+OS: WeArch Linux
+Release: Stable v1.0
+Codename: Gemini
+Desktop: Hyprland (Warp speed)
+Terminal: WeTerm
+Browser: Floorp/Librewolf
+Sound: PipeWire
+Network: Wired/WiFi
+Disk: 1.2T / 2T (60%)
+        `,
+        `
+⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷
+⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇
+⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽
+⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕
+⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕
+⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕
+⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄
+⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕
+⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿
+⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟
+⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠
+⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙
+⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣
+
+User: ArchMaster
+Distro: WeArch
+Shell: Fish
+Resolution: 2560x1440
+Monitor: Gaming Display
+Battery: 99%
+Power: Optimized
+        `,
+        `
+⣿⣿⣿⣿⣿⣷⣿⣿⣿⡅⡹⢿⠆⠙⠋⠉⠻⠿⣿⣿⣿⣿⣿⣿⣮⠻⣦⡙⢷⡑⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣌⠡⠌⠂⣙⠻⣛⠻⠷⠐⠈⠛⢱⣮⣷⣽⣿
+⣿⣿⣿⣿⡇⢿⢹⣿⣶⠐⠁⠀⣀⣠⣤⠄⠀⠀⠈⠙⠻⣿⣿⣿⣦⣵⣌⠻⣷⢝⠦⠚⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢟⣻⣿⣊⡃⠀⣙⠿⣿⣿⣿⣎⢮⡀⢮⣽⣿⣿
+⢿⣿⣿⣿⣧⡸⡎⡛⡩⠖⠀⣴⣿⣿⣿⠀⠀⠀⠀⠸⠇⠀⠙⢿⣿⣿⣿⣷⣌⢷⣑⢷⣄⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣫⠶⠛⠉⠀⠁⠀⠈⠈⠀⠠⠜⠻⣿⣆⢿⣼⣿⣿⣿
+⢐⣿⣿⣿⣿⣧⢧⣧⢻⣦⢀⣹⣿⣿⣿⣇⠀⠄⠀⠀⠀⡀⠀⠈⢻⣿⣿⣿⣿⣷⣝⢦⡹⠷⡙⢿⣿⣿⣿⣿⣿⣿⣿⣿⠈⠁⠀⠀⠀⠁⠀⠀⠀⠱⣶⣄⡀⠀⠈⠛⠜⣿⣿⣿⣿
+⠀⠊⢫⣿⣏⣿⡌⣼⣄⢫⡌⣿⣿⣿⣿⣿⣦⡈⠲⣄⣤⣤⡡⢀⣠⣿⣿⣿⣿⣿⣿⣷⣼⣍⢬⣦⡙⣿⣿⣿⣿⣿⣯⢁⡄⠀⡀⡀⠀⠄⢈⣠⢪⠀⣿⣿⣿⣦⠀⢉⢂⠹⡿⣿⣿
+⠀⠀⠄⢹⢃⢻⣟⠙⣿⣦⠱⢻⣿⣿⣿⣿⣿⣿⣷⣬⣍⣭⣥⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⡙⢿⣼⡿⣿⣿⣿⣿⣿⣷⣄⠘⣱⢦⣤⡴⡿⢈⣼⣿⣿⣿⣇⣴⣶⣮⣅⢻⣿⡏
+⠀⠀⠈⠹⣇⢡⢿⡆⠻⣿⣷⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣍⡻⣿⣟⣻⣿⣿⣿⣿⣷⣦⣥⣬⣤⣴⣾⣿⣿⣿⣿⣷⣿⣿⣿⣿⣷⡜⠃
+⠀⠀⠀⢀⣘⠈⢂⠃⣧⡹⣿⣷⡄⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣮⣅⡙⢿⣟⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⡕⠂
+⠀⠀⠀⠀⠀⠀⠛⢷⣜⢷⡌⠻⣿⣿⣦⣝⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⣹⣷⣦⣹⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠉⠃⠀
+
+WeArch Stats:
+CPU Load: 5%
+Memory: 1.2G/16G
+SWAP: 0B
+Temps: 35°C
+Network: 1000Mbps
+Security: SecureBoot Disabled
+        `,
+        `
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⡿⠿⢿⣦⡀⠀⠀⠀⠀⠀⠀
+⠀⠀⢀⣶⣿⣶⣶⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⠟⠁⣀⣤⡄⢹⣷⡀⠀⠀⠀⠀⠀
+⠀⠀⢸⣿⡧⠤⠤⣌⣉⣩⣿⡿⠶⠶⠒⠛⠛⠻⠿⠶⣾⣿⣣⠔⠉⠀⠀⠙⡆⢻⣷⠀⠀⠀⠀⠀
+⠀⠀⢸⣿⠀⠀⢠⣾⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⡃⠀⠀⠀⠀⠀⢻⠘⣿⡀⠀⠀⠀⠀
+⠀⠀⠘⣿⡀⣴⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⢶⣤⣀⠀⢘⠀⣿⡇⠀⠀⠀⠀
+⠀⠀⠀⢿⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠛⢿⣴⣿⠀⠀⠀⠀⠀
+⠀⠀⠀⣸⡟⠀⠀⠀⣴⡆⠀⠀⠀⠀⠀⠀⠀⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣷⡀⠀⠀⠀⠀
+⠀⠀⢰⣿⠁⠀⠀⣰⠿⣇⠀⠀⠀⠀⠀⠀⠀⢻⣷⡀⠀⢠⡄⠀⠀⠀⠀⠀⡀⠀⠹⣷⠀⠀⠀⠀
+⠀⠀⣾⡏⠀⢀⣴⣿⣤⢿⡄⠀⠀⠀⠀⠀⠀⠸⣿⣷⡀⠘⣧⠀⠀⠀⠀⠀⣷⣄⠀⢻⣇⠀⠀⠀
+⠀⠀⢻⣇⠀⢸⡇⠀⠀⠀⢻⣄⠀⠀⠀⠀⠀⣤⡯⠈⢻⣄⢻⡄⠀⠀⠀⠀⣿⡿⣷⡌⣿⡄⠀⠀
+⠀⢀⣸⣿⠀⢸⡷⣶⣶⡄⠀⠙⠛⠛⠛⠛⠛⠃⣠⣶⣄⠙⠿⣧⠀⠀⠀⢠⣿⢹⣻⡇⠸⣿⡄⠀
+⢰⣿⢟⣿⡴⠞⠀⠘⢿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⡇⠀⣿⡀⢀⣴⠿⣿⣦⣿⠃⠀⢹⣷⠀
+⠀⢿⣿⠁⠀⠀⠀⠀⠀⠀⠀⢠⣀⣀⡀⠀⡀⠀⠀⠀⠀⠀⠀⣿⠛⠛⠁⠀⣿⡟⠁⠀⠀⢀⣿⠂
+⠀⢠⣿⢷⣤⣀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠛⠉⠀⠀⠀⠀⠀⢠⡿⢰⡟⠻⠞⠛⣧⣠⣦⣀⣾⠏⠀
+⠀⢸⣿⠀⠈⢹⡿⠛⢶⡶⢶⣤⣤⣤⣤⣤⣤⣤⣤⣶⠶⣿⠛⠷⢾⣧⣠⡿⢿⡟⠋⠛⠋⠁⠀⠀
+⠀⣾⣧⣤⣶⣟⠁⠀⢸⣇⣸⠹⣧⣠⡾⠛⢷⣤⡾⣿⢰⡟⠀⠀⠀⣿⠋⠁⢈⣿⣄⠀⠀⠀⠀⠀
+⠀⠀⠀⣼⡏⠻⢿⣶⣤⣿⣿⠀⠈⢉⣿⠀⢸⣏⠀⣿⠈⣷⣤⣤⣶⡿⠶⠾⠋⣉⣿⣦⣀⠀⠀⠀
+⠀⠀⣼⡿⣇⠀⠀⠙⠻⢿⣿⠀⠀⢸⣇⠀⠀⣻⠀⣿⠀⣿⠟⠋⠁⠀⠀⢀⡾⠋⠉⠙⣿⡆⠀⠀
+⠀⠀⢻⣧⠙⢷⣤⣦⠀⢸⣿⡄⠀⠀⠉⠳⣾⠏⠀⢹⣾⡇⠀⠀⠙⠛⠶⣾⡁⠀⠀⠀⣼⡇⠀⠀
+⠀⠀⠀⠙⠛⠛⣻⡟⠀⣼⣿⣇⣀⣀⣀⡀⠀⠀⠀⣸⣿⣇⠀⠀⠀⠀⠀⠈⢛⣷⠶⠿⠋⠀⠀⠀
+⠀⠀⠀⠀⠀⢠⣿⣅⣠⣿⠛⠋⠉⠉⠛⠻⠛⠛⠛⠛⠋⠻⣧⡀⣀⣠⢴⠾⠉⣿⣆⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣼⡏⠉⣿⡟⠁⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠙⠿⣿⣌⠁⠀⠀⠈⣿⡆⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣿⣇⣠⣿⣿⡶⠶⠶⣶⣿⣷⡶⣶⣶⣶⣶⡶⠶⠶⢿⣿⡗⣀⣤⣾⠟⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠈⠙⠛⢻⣿⡇⠀⠀⣿⡟⠛⠷⠶⠾⢿⣧⠁⠀⠀⣸⡿⠿⠟⠉⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣷⣦⣤⡿⠀⠀⠀⠀⠀⠀⢿⣧⣤⣼⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+
+Build Date: 2025-12-15
+Compiler: GCC 14.1
+Init: Systemd
+Boot Time: 3.5s (Fast!)
+Maintainer: WeArch Team
+Status: Active Development
+        `
+    ];
+    
+    const asciiOutput = document.getElementById('ascii-output');
+
+    const loadNeofetch = () => {
+        const selectedAscii = asciiArts[Math.floor(Math.random() * asciiArts.length)];
+        let translatedAscii = selectedAscii;
+
+        if (currentLang === 'en') {
+            // Basit çeviri (daha kapsamlı yapılabilir)
+            translatedAscii = translatedAscii
+                .replace('En Yüksek Optimizasyon', 'Highest Optimization')
+                .replace('Kaya Gibi Stabil Çalışma', 'Rock-Solid Stability')
+                .replace('Arch Temelli Sade Güç', 'Arch-Based Pure Power')
+                .replace('Mor Neon Tema', 'Purple Neon Theme');
+        }
+
+        asciiOutput.textContent = translatedAscii;
+    };
+
+    loadNeofetch();
+    setInterval(loadNeofetch, 5000);
+
+    // ---------------------------------------------
+    // 3. Müzik ve Terminal Ses Göstergesi
+    // ---------------------------------------------
+    const iframe = document.getElementById('bg-music');
+    const volBarContainer = document.getElementById('volume-indicator');
+    let isMuted = true;
+    
+    window.toggleAudio = () => {
+        isMuted = !isMuted;
+        const newSrc = isMuted 
+            ? iframe.src.replace('mute=0', 'mute=1')
+            : iframe.src.replace('mute=1', 'mute=0');
+        
+        iframe.src = newSrc; // Yeni URL ile sesi kontrol et
+        
+        const segments = volBarContainer.querySelectorAll('.vol-bar-segment');
+        segments.forEach((seg, index) => {
+            if (isMuted) {
+                seg.classList.remove('active');
+            } else {
+                if (index < 4) {
+                    seg.classList.add('active');
+                } else {
+                    seg.classList.remove('active');
+                }
+            }
+        });
+
+        const volText = document.getElementById('vol-text');
+        volText.textContent = isMuted ? 'MUTE' : 'VOL';
+    };
+
+    // ---------------------------------------------
+    // 4. Matrix Efekti (Mor renkli Matrix)
+    // ---------------------------------------------
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let W = window.innerWidth;
+    let H = document.body.scrollHeight; // Yüksekliği body'nin tamamına göre ayarla
+    canvas.width = W;
+    canvas.height = H;
+
+    const font_size = 16;
+    let columns = Math.floor(W / font_size);
+    const drops = [];
+
+    for (let i = 0; i < columns; i++) {
+        drops[i] = H;
     }
-}
 
-#matrix-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    opacity: 0.5; /* Opaklık artırıldı */
-}
+    const characters = 'WeArch01!@#$%^&*()_+-=[]{};:.,<>/?|\\~`asdfghjklzxcvbnm';
 
-main {
-    padding-top: var(--taskbar-height);
-    position: relative;
-    z-index: 1;
-    min-height: calc(100vh - var(--taskbar-height));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
+    function drawMatrix() {
+        // Yarı saydam koyu mor arkaplan (iz bırakmak için)
+        ctx.fillStyle = 'rgba(10, 10, 26, 0.1)';
+        ctx.fillRect(0, 0, W, H);
 
-/* Üst Panel (Taskbar) - DAHA BÜYÜK ve TERMİNAL ESTETİĞİ */
-#taskbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--taskbar-height);
-    background-color: rgba(0, 0, 0, 0.9); /* Daha koyu arkaplan */
-    border-bottom: 3px solid var(--color-neon-purple); /* Daha kalın border */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 25px; /* Padding artırıldı */
-    box-sizing: border-box;
-    z-index: 100;
-    font-size: 1.1em; /* Yazı boyutu artırıldı */
-    box-shadow: 0 0 15px rgba(187, 134, 252, 0.5); /* Hafif neon gölge */
-}
+        ctx.fillStyle = '#BB86FC'; // Neon Mor rengi
+        ctx.font = font_size + 'px monospace';
 
-.taskbar-left, .taskbar-right, .taskbar-center {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
+        for (let i = 0; i < drops.length; i++) {
+            const text = characters[Math.floor(Math.random() * characters.length)];
+            const x = i * font_size;
+            const y = drops[i];
 
-.prompt {
-    color: var(--color-neon-green); /* Yeşil terminal komut satırı */
-    font-weight: bold;
-}
+            ctx.fillText(text, x, y);
 
-.info-text {
-    color: var(--color-text-light);
-}
+            // Damlayı resetle
+            if (y * Math.random() > H * 1.5) { // Daha uzun damlalar için çarpan artırıldı
+                drops[i] = 0;
+            }
 
-.language-switch {
-    cursor: pointer;
-    color: var(--color-neon-purple);
-    font-weight: bold;
-    transition: color 0.3s;
-}
+            // Damlayı düşür
+            drops[i] = y + font_size;
+        }
+    }
+    
+    // Pencere boyutu değiştiğinde Matrix'i yeniden boyutlandır
+    window.addEventListener('resize', () => {
+        W = window.innerWidth;
+        H = document.body.scrollHeight;
+        canvas.width = W;
+        canvas.height = H;
+        columns = Math.floor(W / font_size);
+        drops.length = columns;
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 0;
+        }
+    });
 
-.language-switch:hover {
-    color: white;
-}
+    // Sayfa uzunluğunu dinamik olarak yakalamak için scroll olayında da boyutlandır
+    window.addEventListener('scroll', () => {
+        H = document.body.scrollHeight;
+        canvas.height = H;
+    });
 
-.discord-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: transform 0.2s;
-}
-.discord-link:hover {
-    transform: scale(1.1);
-}
+    setInterval(drawMatrix, 50);
 
-#arch-logo {
-    opacity: 0.9;
-}
+    // ---------------------------------------------
+    // 5. Saat Fonksiyonu
+    // ---------------------------------------------
+    const updateTime = () => {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds}`;
+    };
 
-/* Terminal Tarzı Ses Göstergesi */
-.terminal-vol {
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--color-neon-purple);
-    padding: 4px 8px;
-    font-size: 0.9em;
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.5);
-    transition: background-color 0.3s;
-}
+    updateTime();
+    setInterval(updateTime, 1000);
 
-.terminal-vol:hover {
-    background-color: rgba(187, 134, 252, 0.1);
-}
+    // ---------------------------------------------
+    // 6. Yılan Oyunu (Snake Game)
+    // ---------------------------------------------
+    const gameContainer = document.getElementById('snake-game-container');
+    const gameCanvas = document.getElementById('snake-canvas');
+    const gameCtx = gameCanvas.getContext('2d');
+    const gameSize = 20; 
+    let snake, food, dx, dy, score, gameLoop;
 
-#vol-text {
-    color: var(--color-neon-purple);
-    margin-right: 5px;
-}
+    const initGame = () => {
+        snake = [{ x: 10 * gameSize, y: 10 * gameSize }];
+        dx = gameSize; 
+        dy = 0;
+        score = 0;
+        createFood();
+    };
 
-.vol-bar-container {
-    display: flex;
-    gap: 3px;
-}
+    const createFood = () => {
+        // ... (önceki koddan alındı) ...
+    };
 
-.vol-bar-segment {
-    width: 5px;
-    height: 12px;
-    background-color: #333;
-    transition: background-color 0.3s;
-}
+    const drawSnake = () => {
+        // ... (önceki koddan alındı) ...
+    };
 
-.vol-bar-segment.active {
-    background-color: var(--color-neon-purple);
-    box-shadow: 0 0 5px var(--color-neon-purple);
-}
+    const drawFood = () => {
+        // ... (önceki koddan alındı) ...
+    };
 
-/* Ana Bölüm ve Başlık */
-.hero-section {
-    padding: 80px 20px;
-    max-width: 900px;
-}
+    const updateGame = () => {
+        const head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-.main-logo {
-    width: 300px; /* Logo boyutu artırıldı */
-    height: auto;
-    margin-bottom: 30px;
-    filter: drop-shadow(0 0 10px rgba(187, 134, 252, 0.7)); /* Logo gölgesi */
-}
+        // Sınır Kontrolü
+        if (head.x < 0 || head.x >= gameCanvas.width || head.y < 0 || head.y >= gameCanvas.height) {
+            endGame();
+            return;
+        }
 
-h1 {
-    font-size: 3.5em; /* Başlık boyutu artırıldı */
-    color: var(--color-text-light);
-    margin-bottom: 50px;
-    font-weight: 700;
-}
+        // Kendine Çarpma Kontrolü
+        if (snake.some((segment, index) => index > 0 && segment.x === head.x && segment.y === head.y)) {
+            endGame();
+            return;
+        }
 
-.we-arch-text {
-    color: var(--color-neon-purple);
-}
+        snake.unshift(head);
 
-/* Aydınlanma Animasyonu */
-.light-up-animation {
-    background-color: transparent;
-    display: inline-block;
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 5px;
-}
+        // Yiyecek yendi mi?
+        if (head.x === food.x && head.y === food.y) {
+            score++;
+            createFood();
+        } else {
+            snake.pop();
+        }
 
-/* Animasyon sadece önceki koddan alındı */
+        gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+        drawFood();
+        drawSnake();
 
-/* Neon İndirme Tuşu */
-.neon-button {
-    background-color: var(--color-neon-purple);
-    color: var(--color-primary-dark);
-    padding: 18px 35px; /* Boyut artırıldı */
-    border: none;
-    border-radius: 5px;
-    font-size: 1.3em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--color-neon-purple), 0 0 20px var(--color-neon-purple) inset;
-    text-transform: uppercase;
-}
+        // Skoru göster
+        gameCtx.fillStyle = '#BB86FC';
+        gameCtx.font = '20px Roboto Mono';
+        gameCtx.fillText(`Score: ${score}`, 10, 30);
+    };
 
-.neon-button:hover {
-    background-color: #fff;
-    color: var(--color-primary-dark);
-    box-shadow: 0 0 20px var(--color-neon-purple), 0 0 40px var(--color-neon-purple) inset;
-    transform: translateY(-3px);
-}
+    const endGame = () => {
+        clearInterval(gameLoop);
+        gameCtx.fillStyle = '#BB86FC';
+        gameCtx.font = '40px Roboto Mono';
+        gameCtx.fillText('GAME OVER!', gameCanvas.width / 2 - 120, gameCanvas.height / 2);
+        gameCtx.font = '20px Roboto Mono';
+        gameCtx.fillText(`Final Score: ${score}`, gameCanvas.width / 2 - 80, gameCanvas.height / 2 + 40);
+        gameCanvas.focus();
+    };
 
-/* Hyprland Benzeri Pencereler */
-.tiling-windows-container {
-    /* ... (önceki koddan alındı) ... */
-}
+    const changeDirection = (event) => {
+        const LEFT = 37, UP = 38, RIGHT = 39, DOWN = 40;
+        const keyPressed = event.keyCode;
+        
+        const goingUp = dy === -gameSize;
+        const goingDown = dy === gameSize;
+        const goingRight = dx === gameSize;
+        const goingLeft = dx === -gameSize;
 
-.tiling-window {
-    /* ... (önceki koddan alındı) ... */
-}
+        if (keyPressed === LEFT && !goingRight) { dx = -gameSize; dy = 0; }
+        if (keyPressed === UP && !goingDown) { dx = 0; dy = -gameSize; }
+        if (keyPressed === RIGHT && !goingLeft) { dx = gameSize; dy = 0; }
+        if (keyPressed === DOWN && !goingUp) { dx = 0; dy = gameSize; }
+    };
+    
+    const startGame = () => {
+        gameContainer.classList.remove('hidden');
+        document.body.classList.add('hidden-overflow');
+        initGame();
+        gameLoop = setInterval(updateGame, 100); 
+        document.addEventListener('keydown', changeDirection);
+    };
 
-.tiling-window:hover {
-    /* ... (önceki koddan alındı) ... */
-}
+    // İndirme Tuşu Olayı
+    document.getElementById('download-button').addEventListener('click', startGame);
 
-/* Neofetch ve Özellikler */
-.neofetch-section {
-    /* ... (önceki koddan alındı) ... */
-    margin: 100px auto; /* Margin artırıldı */
-}
+    // ESC Tuşu ile Oyunu Kapatma
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !gameContainer.classList.contains('hidden')) {
+            clearInterval(gameLoop);
+            gameContainer.classList.add('hidden');
+            document.body.classList.remove('hidden-overflow');
+            document.removeEventListener('keydown', changeDirection);
+        }
+    });
 
-.ascii-container h2 {
-    color: var(--color-neon-purple);
-    border-bottom: 2px dashed var(--color-neon-purple);
-    padding-bottom: 5px;
-}
-
-#ascii-output {
-    /* ... (önceki koddan alındı) ... */
-}
-
-.features-list {
-    /* ... (önceki koddan alındı) ... */
-}
-
-/* Yılan Oyunu Stili */
-/* ... (önceki koddan alındı) ... */
+});
