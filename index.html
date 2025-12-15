@@ -5,85 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeArch Linux - The Most Optimized Arch Linux Distro</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <canvas id="matrix-canvas"></canvas>
 
-    <iframe id="bg-music" width="1" height="1" src="https://www.youtube.com/embed/21Zsm0zkAXw?autoplay=1&loop=1&playlist=21Zsm0zkAXw&mute=1" frameborder="0" allow="autoplay; encrypted-media; loop" allowfullscreen style="display: none;"></iframe>
-
     <header id="taskbar-dashboard">
         <div class="dash-item left-title">
-            <span class="prompt">$ WeArch ~</span>
-            <span class="language-switch" onclick="toggleLanguage()">[ TR / EN ]</span>
+            <span class="prompt">WeArch Linux</span>
         </div>
 
         <div class="dash-item center-stats">
-            <span class="stat-label">CPU:</span>
-            <span id="cpu-load" class="stat-value">5%</span>
-            
-            <span class="stat-label">MEM:</span>
-            <span id="mem-usage" class="stat-value">1.2G/16G</span>
-            
-            <span class="stat-label">VOL:</span>
-            <div id="volume-indicator" class="terminal-vol" onclick="toggleAudio()">
-                <div class="vol-bar-container">
-                    <div class="vol-bar-segment active"></div>
-                    <div class="vol-bar-segment active"></div>
-                    <div class="vol-bar-segment active"></div>
-                    <div class="vol-bar-segment"></div>
+            <div class="stat-group">
+                <span class="stat-label">[ TR / EN ]</span>
+                <span class="language-switch" onclick="toggleLanguage()"></span>
+            </div>
+            <div class="stat-group">
+                <span class="stat-label">CPU:</span>
+                <span id="cpu-load" class="stat-value">5%</span>
+            </div>
+            <div class="stat-group">
+                <span class="stat-label">MEM:</span>
+                <span id="mem-usage" class="stat-value">1.2G/16G</span>
+            </div>
+            <div class="stat-group">
+                <span class="stat-label">VOL:</span>
+                <div id="volume-indicator" class="terminal-vol" onclick="toggleAudio()">
+                    <div class="vol-bar-container">
+                        <div class="vol-bar-segment active"></div>
+                        <div class="vol-bar-segment active"></div>
+                        <div class="vol-bar-segment active"></div>
+                        <div class="vol-bar-segment active"></div>
+                        <div class="vol-bar-segment"></div>
+                        <div class="vol-bar-segment"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="dash-item right-info">
-            <span id="current-time">00:00:00</span>
-            <a href="https://discord.gg/5RgM9hDkpb" target="_blank" class="discord-link">Discord</a>
+            <div class="stat-group">
+                <span id="current-time">00:00:00</span>
+            </div>
         </div>
     </header>
     
     <main id="main-window">
         <div class="window-header">
-            <span class="window-title">WeArch Linux - The Optimized Arch Distro</span>
-            <div class="window-controls">
-                <span class="control-btn minimize">-</span>
-                <span class="control-btn maximize">□</span>
-                <span class="control-btn close">x</span>
+            <div class="header-left">
+                <div class="header-tab">
+                    <span class="tab-label">Discord</span>
+                </div>
+                <div class="header-tab active-tab">
+                    <span class="tab-label">OS: WeArch Linux</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="control-btn minimize">_</span>
+                <span class="control-btn close">X</span>
             </div>
         </div>
         
         <div class="window-content">
             
-            <div class="content-header">
-                <img src="https://i.ibb.co/R4DM0Cj2/Gemini-Generated-mage-in4buzin4buzin4b-removebg-preview-1.png" alt="WeArch Logo" class="main-logo-small">
-                <h1 class="light-up-animation">
-                    <span class="we-arch-text">WeArch Linux</span>
-                </h1>
-                <p data-tr="- En Optimize Arch Linux Distrosu -" data-en="- The Most Optimized Arch Linux Distro -">- En Optimize Arch Linux Distrosu -</p>
+            <h1 class="main-title">WeArch Linux</h1>
+            <p class="subtitle">- The Most Optimized Arch Linux Distro -</p>
+            
+            <div class="content-nav">
+                <button class="nav-button">taskbar</button>
+                <button class="nav-button">terminal item</button>
+                <button class="nav-button">ach style css</button>
             </div>
             
-            <hr class="neon-divider">
+            <hr class="content-divider">
 
             <section class="text-section">
-                <h2 data-tr="NEDEN WEARCH LINUX?" data-en="WHY WEARCH LINUX?">NEDEN WEARCH LINUX?</h2>
-                <p data-tr="WeArch Linux - Bu işletim sistemi, halihazırda stabil ve güçlü olan Arch Linux'un en uç optimizasyonlarla yeniden derlenmiş halidir. Gereksiz hiçbir şey içermez, sadece saf hız ve performans sağlar. Linux deneyiminizi yormayan ve yormayacak bir şekilde en üst seviyeye taşır." data-en="WeArch Linux - This OS is a re-compiled version of the already stable and powerful Arch Linux, brought to the extreme limits of optimization. It contains nothing unnecessary, providing only pure speed and performance. It takes your Linux experience to the highest level without causing any strain.">WeArch Linux - Bu işletim sistemi, halihazırda stabil ve güçlü olan Arch Linux'un en uç optimizasyonlarla yeniden derlenmiş halidir. Gereksiz hiçbir şey içermez, sadece saf hız ve performans sağlar. Linux deneyiminizi yormayan ve yormayacak bir şekilde en üst seviyeye taşır.</p>
-                <p data-tr="Bu felsefe sadece donanım değil, kullanıcı arayüzü ve deneyim açısından da geçerlidir. Hyprland ile optimize edilmiş bir masaüstü yöneticisi sunarak size hem modern hem de hafif bir çalışma ortamı sağlar." data-en="This philosophy applies not only to hardware but also to the user interface and experience. By offering a desktop manager optimized with Hyprland, it provides you with a working environment that is both modern and lightweight.">Bu felsefe sadece donanım değil, kullanıcı arayüzü ve deneyim açısından da geçerlidir. Hyprland ile optimize edilmiş bir masaüstü yöneticisi sunarak size hem modern hem de hafif bir çalışma ortamı sağlar.</p>
+                <p data-tr="WeArch Linux - Bu işletim sistemi, halihazırda stabil ve güçlü olan Arch Linux'un en uç optimizasyonlarla yeniden derlenmiş halidir. Gereksiz hiçbir şey içermez, sadece saf hız ve performans sağlar. Linux deneyiminizi yormayan ve yormayacak bir şekilde en üst seviyeye taşır." data-en="WeArch Linux - The most stable and powerful Arch Linux distro, recompiled with extreme optimizations. It contains nothing unnecessary, providing pure speed and performance. It elevates your Linux experience without strain.">WeArch Linux - Bu işletim sistemi, halihazırda stabil ve güçlü olan Arch Linux'un en uç optimizasyonlarla yeniden derlenmiş halidir. Gereksiz hiçbir şey içermez, sadece saf hız ve performans sağlar. Linux deneyiminizi yormayan ve yormayacak bir şekilde en üst seviyeye taşır.</p>
+                <p data-tr="Bu felsefe sadece donanım değil, kullanıcı arayüzü ve deneyim açısından da geçerlidir. Hyprland ile optimize edilmiş bir masaüstü yöneticisi sunarak size hem modern hem de hafif bir çalışma ortamı sağlar." data-en="This philosophy extends beyond hardware to the UI and experience. Optimized with Hyprland, it provides a modern and lightweight working environment.">Bu felsefe sadece donanım değil, kullanıcı arayüzü ve deneyim açısından da geçerlidir. Hyprland ile optimize edilmiş bir masaüstü yöneticisi sunarak size hem modern hem de hafif bir çalışma ortamı sağlar.</p>
             </section>
-
-            <div class="cta-section">
-                <button id="download-button" class="neon-button" data-tr="WeArch Linux'u İndir" data-en="Download WeArch Linux">WeArch Linux'u İndir</button>
             
-                <div class="features-list">
-                    <h3 data-tr="Sistem Özellikleri" data-en="System Features">Sistem Özellikleri</h3>
-                    <ul>
-                        <li><span class="feature-icon">⚡</span> <span data-tr="Uç Nokta Optimizasyon" data-en="Extreme Optimization">Uç Nokta Optimizasyon</span></li>
-                        <li><span class="feature-icon">🛡️</span> <span data-tr="Kaya Gibi Stabil Kernel" data-en="Rock-Solid Stable Kernel">Kaya Gibi Stabil Kernel</span></li>
-                        <li><span class="feature-icon">🟣</span> <span data-tr="Hyprland/Mor Tema" data-en="Hyprland/Purple Theme">Hyprland/Mor Tema</span></li>
-                    </ul>
-                </div>
-            </div>
-
+            <button id="download-button" class="action-button" data-tr="WeArch Linux'u İndir" data-en="Download WeArch Linux">WeArch Linux'u İndir</button>
         </div>
     </main>
 
